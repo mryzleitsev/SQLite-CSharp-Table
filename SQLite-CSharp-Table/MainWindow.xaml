@@ -5,8 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQLite_CSharp_Table"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        FontFamily="JetBrainsMono"
+        WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> 
+            <RowDefinition Height="Auto"/>   
+            <RowDefinition Height="Auto"/> 
+            <RowDefinition Height="*"/> 
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10"  
+                    HorizontalAlignment="Center">
+            <Label Content="Name: "/>
+            <TextBox x:Name = "NameTextBox" Margin="10,0,0,0" Width="200"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10"  
+                    HorizontalAlignment="Center">
+            <Label Content="Id: "/>
+            <TextBox x:Name = "IdTextBox" Margin="31,0,0,0" Width="200"/>
+        </StackPanel>
 
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+            <Button x:Name= "InsertButton" Content="Insert" Margin="0,0,10,0" Width="100" Height="30" Click="InsertButton_Click"/>
+            <Button x:Name= "UpdateButton" Content="Update" Margin="0,0,10,0" Width="100" Height="30" Click="UpdateButton_Click"/>
+            <Button x:Name= "DeleteButton" Content="Delete"  Width="100" Height="30" Click="DeleteButton_Click"/>
+        </StackPanel>
+        
+        <DataGrid x:Name="DataGridTable" Grid.Row="3" Margin="10" AutoGenerateColumns="True">
+            
+        </DataGrid>
     </Grid>
 </Window>
