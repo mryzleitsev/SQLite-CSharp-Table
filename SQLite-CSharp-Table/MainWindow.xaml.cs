@@ -1,34 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Data.SQLite;
 
 namespace SQLite_CSharp_Table
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
+        private string path = "Data_Table.db";
+        private string cs = @"URI=file:" + AppDomain.CurrentDomain.BaseDirectory + "\\data_table.db";
+
+        private SQLiteConnection con;
+        private SQLiteCommand cmd;
+        private SQLiteDataReader dr;
 
         public MainWindow()
         {
             InitializeComponent();
-            
             DataGridTable.ItemsSource = Items;
-            
+
             DataGridTextColumn nameColumn = new DataGridTextColumn();
             nameColumn.Header = "Name";
             nameColumn.Binding = new Binding("Name");
@@ -37,8 +30,14 @@ namespace SQLite_CSharp_Table
             idColumn.Header = "Id";
             idColumn.Binding = new Binding("Id");
         }
+
+        private void ShowData()
+        {
+            con = new SQLiteConnection(cs);
+        }
+
         private void InsertButton_Click(object sender, RoutedEventArgs e)
-        {   
+        {
             try
             {
                 string name = NameTextBox.Text;
@@ -54,18 +53,36 @@ namespace SQLite_CSharp_Table
                 MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
-        { 
-            
+        {
+            try
+            {
+               
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        { 
-            
+        {
+            try
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+        
         public class Item
         {
             public string Name { get; set; }
             public int Id { get; set; }
         }
+        
     }
 }
