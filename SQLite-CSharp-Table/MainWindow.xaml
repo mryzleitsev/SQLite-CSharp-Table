@@ -34,7 +34,7 @@
             <Button x:Name= "DeleteButton" Content="Delete"  Width="100" Height="30" Click="DeleteButton_Click"/>
         </StackPanel>
         
-        <DataGrid x:Name="DataGridTable" Grid.Row="3" Margin="10" AutoGenerateColumns="True">
+        <DataGrid x:Name="DataGridTable" Grid.Row="3" Margin="10" AutoGenerateColumns="True" >
             
         </DataGrid>
     </Grid>
