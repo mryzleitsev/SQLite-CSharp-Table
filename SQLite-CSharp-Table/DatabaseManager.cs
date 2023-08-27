@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Data.SQLite;
-using System.Windows;
 
 namespace SQLite_CSharp_Table;
 
 public class DatabaseManager
 {
-    private SQLiteConnection _connection;
-    
+    private readonly SQLiteConnection _connection;
+
     public DatabaseManager()
     {
         _connection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
@@ -17,52 +15,40 @@ public class DatabaseManager
 
     public void CareateTable()
     {
-        try
+        var createTableQuery =
+            "CREATE TABLE IF NOT EXISTS Users(Id INTEGER PRIMARY KEY, Username TEXT NOT NULL)";
+        using (var command = new SQLiteCommand(createTableQuery, _connection))
         {
-            string createTableQuery =
-                "CREATE TABLE IF NOT EXISTS Users(Id INTEGER PRIMARY KEY, Username TEXT NOT NULL)";
-            using (SQLiteCommand command = new SQLiteCommand(createTableQuery, _connection))
-            {
-                command.ExecuteNonQuery();
-            }
-
-            MessageBox.Show("Table created succsessfully.");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-       
-    }
-
-    public void IncrementUsername(string id, string newSuffix)
-    {
-        string incrementQuery = "UPDATE Users SET Username = Username || @newSuffix WHERE Id = @id";
-        using (SQLiteCommand command = new SQLiteCommand(incrementQuery, _connection))
-        {
-            command.Parameters.AddWithValue("@id", id);
-            command.Parameters.AddWithValue("@newSuffix", newSuffix);
             command.ExecuteNonQuery();
         }
     }
 
+    public void IncrementUsername(string id, string newUsername)
+    {
+        var incrementQuery = "INSERT INTO Users (Id, Username) VALUES (@Id, @Username)";
+        using (var command = new SQLiteCommand(incrementQuery, _connection))
+        {
+            command.Parameters.AddWithValue("@Id", id);
+            command.Parameters.AddWithValue("@Username", newUsername);
+            command.ExecuteNonQuery();
+        }
+    }
 
     public void UpdateUsername(string id, string newUsername)
     {
-        string updateQuery = "UPDATE Users SET Username = @newUsername WHERE Id = @id";
-        using (SQLiteCommand command = new SQLiteCommand(updateQuery, _connection))
+        var updateQuery = "UPDATE Users SET Username = @Username WHERE Id = @Id";
+        using (var command = new SQLiteCommand(updateQuery, _connection))
         {
-            command.Parameters.AddWithValue("@id", id);
-            command.Parameters.AddWithValue("@newUsername", newUsername);
+            command.Parameters.AddWithValue("@Id", id);
+            command.Parameters.AddWithValue("@Username", newUsername);
             command.ExecuteNonQuery();
         }
     }
 
     public void DeleteUser(string id)
     {
-        string deleteQuery = "DELETE FROM Users WHERE Id = @id";
-        using (SQLiteCommand command = new SQLiteCommand(deleteQuery, _connection))
+        var deleteQuery = "DELETE FROM Users WHERE Id = @id";
+        using (var command = new SQLiteCommand(deleteQuery, _connection))
         {
             command.Parameters.AddWithValue("@id", id);
             command.ExecuteNonQuery();
@@ -74,29 +60,26 @@ public class DatabaseManager
         _connection.Close();
     }
 
-    
+
     public ObservableCollection<MainWindow.Users> GetUsers()
     {
         ObservableCollection<MainWindow.Users> users = new();
 
-        string selectQuery = "SELECT Id, Username FROM Users";
-        using (SQLiteCommand command = new SQLiteCommand(selectQuery, _connection))
+        var selectQuery = "SELECT Id, Username FROM Users";
+        using (var command = new SQLiteCommand(selectQuery, _connection))
         {
-            using (SQLiteDataReader reader = command.ExecuteReader())
+            using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    int id = reader.GetInt32(0);
-                    string username = reader.GetString(1);
-                    
-                    users.Add(new MainWindow.Users{Id = id, Name = username});
-                }    
+                    var id = reader.GetInt32(0);
+                    var username = reader.GetString(1);
+
+                    users.Add(new MainWindow.Users { Id = id, Name = username });
+                }
             }
         }
 
         return users;
     }
-
- 
-
 }
