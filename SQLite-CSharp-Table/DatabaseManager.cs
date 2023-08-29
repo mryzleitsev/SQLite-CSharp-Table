@@ -61,9 +61,9 @@ public class DatabaseManager
     }
 
 
-    public ObservableCollection<MainWindow.Users> GetUsers()
+    public ObservableCollection<User> GetUsers()
     {
-        ObservableCollection<MainWindow.Users> users = new();
+        ObservableCollection<User> users = new();
 
         var selectQuery = "SELECT Id, Username FROM Users";
         using (var command = new SQLiteCommand(selectQuery, _connection))
@@ -75,7 +75,7 @@ public class DatabaseManager
                     var id = reader.GetInt32(0);
                     var username = reader.GetString(1);
 
-                    users.Add(new MainWindow.Users { Id = id, Name = username });
+                    users.Add(new User { Id = id, Name = username });
                 }
             }
         }

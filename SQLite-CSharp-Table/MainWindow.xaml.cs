@@ -20,7 +20,7 @@ public partial class MainWindow : Window
         DataGridTable.ItemsSource = Items;
     }
 
-    public ObservableCollection<Users> Items { get; set; } = new();
+    public ObservableCollection<User> Items { get; set; } = new();
 
     private void LoadDataFromDB()
     {
@@ -29,7 +29,7 @@ public partial class MainWindow : Window
 
     private void DataGridTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (DataGridTable.SelectedItem is Users selectedUser)
+        if (DataGridTable.SelectedItem is User selectedUser)
         {
             NameTextBox.Text = selectedUser.Name;
             IdTextBox.Text = selectedUser.Id.ToString();
@@ -47,7 +47,7 @@ public partial class MainWindow : Window
         {
             var name = NameTextBox.Text;
             var id = int.Parse(IdTextBox.Text);
-            Items.Add(new Users { Name = name, Id = id });
+            Items.Add(new User { Name = name, Id = id });
 
             _databaseManager.IncrementUsername(Convert.ToString(id), name);
 
@@ -68,7 +68,7 @@ public partial class MainWindow : Window
     {
         try
         {
-            if (DataGridTable.SelectedItem is Users selectedUser)
+            if (DataGridTable.SelectedItem is User selectedUser)
             {
                 selectedUser.Name = NameTextBox.Text;
                 selectedUser.Id = int.Parse(IdTextBox.Text);
@@ -89,7 +89,7 @@ public partial class MainWindow : Window
     {
         try
         {
-            if (DataGridTable.SelectedItem is Users selectedUser)
+            if (DataGridTable.SelectedItem is User selectedUser)
             {
                 _databaseManager.DeleteUser(Convert.ToString(selectedUser.Id));
 
@@ -105,12 +105,5 @@ public partial class MainWindow : Window
         {
             MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-    }
-
-
-    public class Users
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
     }
 }
