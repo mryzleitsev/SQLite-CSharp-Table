@@ -14,7 +14,7 @@ public partial class MainWindow
         InitializeComponent();
 
         _databaseManager = new DatabaseManager();
-        _databaseManager.CareateTable();
+        _databaseManager.CreateTable();
 
         LoadDataFromDataBase();
         DataGridTable.ItemsSource = Items;

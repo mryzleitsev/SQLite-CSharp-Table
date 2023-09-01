@@ -14,7 +14,7 @@ public class DatabaseManager
         _connection.Open();
     }
 
-    public void CareateTable()
+    public void CreateTable()
     {
         var createTableQuery =
             "CREATE TABLE IF NOT EXISTS Users(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
