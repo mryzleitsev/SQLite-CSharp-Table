@@ -18,10 +18,9 @@ public partial class MainWindow : Window
 
         LoadDataFromDB();
         DataGridTable.ItemsSource = Items;
-        
     }
 
-  
+
     public ObservableCollection<User> Items { get; set; } = new();
 
     private void LoadDataFromDB()
@@ -29,7 +28,6 @@ public partial class MainWindow : Window
         Items = _databaseManager.GetUsers();
     }
 
-    
 
     private void DataGridTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -53,42 +51,39 @@ public partial class MainWindow : Window
 
     private void InsertButton_Click(object sender, RoutedEventArgs e)
     {
-        if (FirstNameTextBox.Text == string.Empty || LastNameTextBox.Text == string.Empty || MailTextBox.Text == string.Empty || TelefonTextBox.Text == string.Empty )
-        {
+        if (FirstNameTextBox.Text == string.Empty || LastNameTextBox.Text == string.Empty ||
+            MailTextBox.Text == string.Empty || TelefonTextBox.Text == string.Empty)
             MessageBox.Show("Some textbox is empty, please enter info in empty textbox");
-        }
         else
-        {
             try
             {
                 var firstName = FirstNameTextBox.Text;
                 var lastName = LastNameTextBox.Text;
                 var email = MailTextBox.Text;
                 var telefon = TelefonTextBox.Text;
-          
-                Items.Add(new User { FirstName = firstName});
-                Items.Add(new User { LastName = lastName});
-                Items.Add(new User { Email = email});
-                Items.Add(new User { Telefon = telefon});
 
-                _databaseManager.IncrementUsername( firstName, lastName, email, telefon);
+                Items.Add(new User { FirstName = firstName });
+                Items.Add(new User { LastName = lastName });
+                Items.Add(new User { Email = email });
+                Items.Add(new User { Telefon = telefon });
+
+                _databaseManager.IncrementUsername(firstName, lastName, email, telefon);
 
                 FirstNameTextBox.Text = "";
                 IdTextBox.Text = "";
                 LastNameTextBox.Text = "";
                 MailTextBox.Text = "";
                 TelefonTextBox.Text = "";
-                
+
                 LoadDataFromDB();
                 DataGridTable.ItemsSource = Items;
                 DataGridTable.Items.Refresh();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
-        }
-       
     }
 
     private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -107,7 +102,7 @@ public partial class MainWindow : Window
                 _databaseManager.UpdateUsername(Convert.ToString(selectedUser.Id), selectedUser.FirstName,
                     selectedUser.LastName, selectedUser.Email, selectedUser.Telefon);
 
-                
+
                 DataGridTable.ItemsSource = Items;
                 DataGridTable.Items.Refresh();
             }

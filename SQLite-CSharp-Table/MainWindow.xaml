@@ -3,60 +3,61 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SQLite_CSharp_Table"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800"
         FontFamily="JetBrainsMono"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> 
-            <RowDefinition Height="Auto"/> 
-            <RowDefinition Height="Auto"/> 
-            <RowDefinition Height="Auto"/> 
-            <RowDefinition Height="Auto"/>   
-            <RowDefinition Height="Auto"/> 
-            <RowDefinition Height="*"/> 
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10"  
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10"
                     HorizontalAlignment="Center">
-            <Label Content="Id: "/>
-            <TextBox x:Name="IdTextBox" Margin="50,0,0,0" Width="200" IsReadOnly="True"/>
+            <Label Content="Id: " />
+            <TextBox x:Name="IdTextBox" Margin="50,0,0,0" Width="200" IsReadOnly="True" />
         </StackPanel>
-        
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10"  
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10"
                     HorizontalAlignment="Center">
-            <Label Content="First name: "/>
-            <TextBox x:Name="FirstNameTextBox" Margin="10,0,0,0" Width="200"/>
+            <Label Content="First name: " />
+            <TextBox x:Name="FirstNameTextBox" Margin="10,0,0,0" Width="200" />
         </StackPanel>
-        
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10"  
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10"
                     HorizontalAlignment="Center">
-            <Label Content="Last name: "/>
-            <TextBox x:Name="LastNameTextBox" Margin="10,0,0,0" Width="200"/>
+            <Label Content="Last name: " />
+            <TextBox x:Name="LastNameTextBox" Margin="10,0,0,0" Width="200" />
         </StackPanel>
-        
-        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10"  
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10"
                     HorizontalAlignment="Center">
-            <Label Content="Email: "/>
+            <Label Content="Email: " />
             <TextBox x:Name="MailTextBox" Margin="31,0,0,0" Width="200" />
         </StackPanel>
-        
-        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10"  
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10"
                     HorizontalAlignment="Center">
-            <Label Content="Telefon: "/>
+            <Label Content="Telefon: " />
             <TextBox x:Name="TelefonTextBox" Margin="26,0,0,0" Width="200" />
         </StackPanel>
-        
+
         <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
-            <Button x:Name="InsertButton" Content="Insert" Margin="0,0,10,0" Width="100" Height="30" Click="InsertButton_Click"/>
-            <Button x:Name="UpdateButton" Content="Update" Margin="0,0,10,0" Width="100" Height="30" Click="UpdateButton_Click"/>
-            <Button x:Name="DeleteButton" Content="Delete"  Width="100" Height="30" Click="DeleteButton_Click"/>
+            <Button x:Name="InsertButton" Content="Insert" Margin="0,0,10,0" Width="100" Height="30"
+                    Click="InsertButton_Click" />
+            <Button x:Name="UpdateButton" Content="Update" Margin="0,0,10,0" Width="100" Height="30"
+                    Click="UpdateButton_Click" />
+            <Button x:Name="DeleteButton" Content="Delete" Width="100" Height="30" Click="DeleteButton_Click" />
         </StackPanel>
-        
-        <DataGrid x:Name="DataGridTable" Grid.Row="6" Margin="10" AutoGenerateColumns="True" SelectionChanged="DataGridTable_SelectionChanged">
-        </DataGrid>
-        
+
+        <DataGrid x:Name="DataGridTable" Grid.Row="6" Margin="10" AutoGenerateColumns="True"
+                  SelectionChanged="DataGridTable_SelectionChanged" />
+
     </Grid>
 </Window>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Data.SQLite;
 
 namespace SQLite_CSharp_Table;
@@ -30,10 +29,10 @@ public class DatabaseManager
     }
 
 
-
     public void IncrementUsername(string newFirstName, string newLastName, string newEmail, string newTelefon)
     {
-        var incrementQuery = "INSERT INTO Users (FirstName, LastName, Email, Telefon) VALUES (@FirstName, @LastName, @Email, @Telefon)";
+        var incrementQuery =
+            "INSERT INTO Users (FirstName, LastName, Email, Telefon) VALUES (@FirstName, @LastName, @Email, @Telefon)";
         using (var command = new SQLiteCommand(incrementQuery, _connection))
         {
             command.Parameters.AddWithValue("@FirstName", newFirstName);
@@ -43,10 +42,11 @@ public class DatabaseManager
             command.ExecuteNonQuery();
         }
     }
-    
+
     public void UpdateUsername(string id, string newFirstName, string newLastName, string newEmail, string newTelefon)
     {
-        var updateQuery = "UPDATE Users SET FirstName = @FirstName, LastName = @LastName, Email = @Email, Telefon = @Telefon WHERE Id = @Id";
+        var updateQuery =
+            "UPDATE Users SET FirstName = @FirstName, LastName = @LastName, Email = @Email, Telefon = @Telefon WHERE Id = @Id";
         using (var command = new SQLiteCommand(updateQuery, _connection))
         {
             command.Parameters.AddWithValue("@Id", id);
@@ -72,7 +72,7 @@ public class DatabaseManager
     {
         _connection.Close();
     }
-    
+
     public ObservableCollection<User> GetUsers()
     {
         ObservableCollection<User> users = new();
@@ -90,25 +90,23 @@ public class DatabaseManager
                     var email = reader.GetString(3);
                     var telefon = reader.GetString(4);
 
-                    users.Add(new User { Id = id, FirstName = firstName, LastName = lastName, Email = email, Telefon = telefon});
+                    users.Add(new User
+                        { Id = id, FirstName = firstName, LastName = lastName, Email = email, Telefon = telefon });
                 }
             }
         }
 
         return users;
     }
+
     public int GetMaxId()
     {
         var selectMaxIdQuery = "SELECT MAX(Id) FROM Users";
         using (var command = new SQLiteCommand(selectMaxIdQuery, _connection))
         {
             var result = command.ExecuteScalar();
-            if (result != DBNull.Value)
-            {
-                return Convert.ToInt32(result);
-            }
-            return 0; 
+            if (result != DBNull.Value) return Convert.ToInt32(result);
+            return 0;
         }
     }
-
 }
