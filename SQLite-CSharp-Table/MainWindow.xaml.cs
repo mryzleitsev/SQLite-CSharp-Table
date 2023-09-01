@@ -35,37 +35,60 @@ public partial class MainWindow : Window
     {
         if (DataGridTable.SelectedItem is User selectedUser)
         {
-            NameTextBox.Text = selectedUser.Name;
+            FirstNameTextBox.Text = selectedUser.FirstName;
             IdTextBox.Text = selectedUser.Id.ToString();
+            LastNameTextBox.Text = selectedUser.LastName;
+            TelefonTextBox.Text = selectedUser.Telefon;
+            MailTextBox.Text = selectedUser.Email;
         }
         else
         {
-            NameTextBox.Text = "";
+            FirstNameTextBox.Text = "";
             IdTextBox.Text = Convert.ToString(_databaseManager.GetMaxId() + 1);
+            LastNameTextBox.Text = "";
+            MailTextBox.Text = "";
+            TelefonTextBox.Text = "";
         }
     }
 
     private void InsertButton_Click(object sender, RoutedEventArgs e)
     {
-        try
+        if (FirstNameTextBox.Text == string.Empty || LastNameTextBox.Text == string.Empty || MailTextBox.Text == string.Empty || TelefonTextBox.Text == string.Empty )
         {
-            var name = NameTextBox.Text;
+            MessageBox.Show("Some textbox is empty, please enter info in empty textbox");
+        }
+        else
+        {
+            try
+            {
+                var firstName = FirstNameTextBox.Text;
+                var lastName = LastNameTextBox.Text;
+                var email = MailTextBox.Text;
+                var telefon = TelefonTextBox.Text;
           
-            Items.Add(new User { Name = name});
+                Items.Add(new User { FirstName = firstName});
+                Items.Add(new User { LastName = lastName});
+                Items.Add(new User { Email = email});
+                Items.Add(new User { Telefon = telefon});
 
-            _databaseManager.IncrementUsername( name);
+                _databaseManager.IncrementUsername( firstName, lastName, email, telefon);
 
-            NameTextBox.Text = "";
-            IdTextBox.Text = "";
-
-            LoadDataFromDB();
-            DataGridTable.ItemsSource = Items;
-            DataGridTable.Items.Refresh();
+                FirstNameTextBox.Text = "";
+                IdTextBox.Text = "";
+                LastNameTextBox.Text = "";
+                MailTextBox.Text = "";
+                TelefonTextBox.Text = "";
+                
+                LoadDataFromDB();
+                DataGridTable.ItemsSource = Items;
+                DataGridTable.Items.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+       
     }
 
     private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -74,10 +97,15 @@ public partial class MainWindow : Window
         {
             if (DataGridTable.SelectedItem is User selectedUser)
             {
-                selectedUser.Name = NameTextBox.Text;
+                selectedUser.FirstName = FirstNameTextBox.Text;
                 selectedUser.Id = int.Parse(IdTextBox.Text);
+                selectedUser.LastName = LastNameTextBox.Text;
+                selectedUser.Email = MailTextBox.Text;
+                selectedUser.Telefon = TelefonTextBox.Text;
 
-                _databaseManager.UpdateUsername(Convert.ToString(selectedUser.Id), selectedUser.Name);
+
+                _databaseManager.UpdateUsername(Convert.ToString(selectedUser.Id), selectedUser.FirstName,
+                    selectedUser.LastName, selectedUser.Email, selectedUser.Telefon);
 
                 
                 DataGridTable.ItemsSource = Items;
@@ -99,8 +127,11 @@ public partial class MainWindow : Window
                 _databaseManager.DeleteUser(Convert.ToString(selectedUser.Id));
 
                 Items.Remove(selectedUser);
-                NameTextBox.Text = "";
+                FirstNameTextBox.Text = "";
                 IdTextBox.Text = "";
+                LastNameTextBox.Text = "";
+                MailTextBox.Text = "";
+                TelefonTextBox.Text = "";
 
                 DataGridTable.ItemsSource = Items;
                 DataGridTable.Items.Refresh();
