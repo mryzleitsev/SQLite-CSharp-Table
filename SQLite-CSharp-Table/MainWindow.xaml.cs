@@ -18,14 +18,18 @@ public partial class MainWindow : Window
 
         LoadDataFromDB();
         DataGridTable.ItemsSource = Items;
+        
     }
 
+  
     public ObservableCollection<User> Items { get; set; } = new();
 
     private void LoadDataFromDB()
     {
         Items = _databaseManager.GetUsers();
     }
+
+    
 
     private void DataGridTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -37,7 +41,7 @@ public partial class MainWindow : Window
         else
         {
             NameTextBox.Text = "";
-            IdTextBox.Text = "";
+            IdTextBox.Text = Convert.ToString(_databaseManager.GetMaxId() + 1);
         }
     }
 
@@ -46,15 +50,15 @@ public partial class MainWindow : Window
         try
         {
             var name = NameTextBox.Text;
-            var id = int.Parse(IdTextBox.Text);
-            Items.Add(new User { Name = name, Id = id });
+          
+            Items.Add(new User { Name = name});
 
-            _databaseManager.IncrementUsername(Convert.ToString(id), name);
+            _databaseManager.IncrementUsername( name);
 
             NameTextBox.Text = "";
             IdTextBox.Text = "";
 
-
+            LoadDataFromDB();
             DataGridTable.ItemsSource = Items;
             DataGridTable.Items.Refresh();
         }
@@ -75,6 +79,7 @@ public partial class MainWindow : Window
 
                 _databaseManager.UpdateUsername(Convert.ToString(selectedUser.Id), selectedUser.Name);
 
+                
                 DataGridTable.ItemsSource = Items;
                 DataGridTable.Items.Refresh();
             }

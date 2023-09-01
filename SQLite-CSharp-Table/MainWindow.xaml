@@ -25,7 +25,7 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10"  
                     HorizontalAlignment="Center">
             <Label Content="Id: "/>
-            <TextBox x:Name = "IdTextBox" Margin="31,0,0,0" Width="200"/>
+            <TextBox x:Name = "IdTextBox" Margin="31,0,0,0" Width="200" IsReadOnly="True"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">

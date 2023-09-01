@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Data.SQLite;
 
 namespace SQLite_CSharp_Table;
@@ -16,24 +17,24 @@ public class DatabaseManager
     public void CareateTable()
     {
         var createTableQuery =
-            "CREATE TABLE IF NOT EXISTS Users(Id INTEGER PRIMARY KEY, Username TEXT NOT NULL)";
+            "CREATE TABLE IF NOT EXISTS Users(Id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT NOT NULL)";
         using (var command = new SQLiteCommand(createTableQuery, _connection))
         {
             command.ExecuteNonQuery();
         }
     }
 
-    public void IncrementUsername(string id, string newUsername)
+
+    public void IncrementUsername(string newUsername)
     {
-        var incrementQuery = "INSERT INTO Users (Id, Username) VALUES (@Id, @Username)";
+        var incrementQuery = "INSERT INTO Users (Username) VALUES (@Username)";
         using (var command = new SQLiteCommand(incrementQuery, _connection))
         {
-            command.Parameters.AddWithValue("@Id", id);
             command.Parameters.AddWithValue("@Username", newUsername);
             command.ExecuteNonQuery();
         }
     }
-
+    
     public void UpdateUsername(string id, string newUsername)
     {
         var updateQuery = "UPDATE Users SET Username = @Username WHERE Id = @Id";
@@ -59,8 +60,7 @@ public class DatabaseManager
     {
         _connection.Close();
     }
-
-
+    
     public ObservableCollection<User> GetUsers()
     {
         ObservableCollection<User> users = new();
@@ -82,4 +82,18 @@ public class DatabaseManager
 
         return users;
     }
+    public int GetMaxId()
+    {
+        var selectMaxIdQuery = "SELECT MAX(Id) FROM Users";
+        using (var command = new SQLiteCommand(selectMaxIdQuery, _connection))
+        {
+            var result = command.ExecuteScalar();
+            if (result != DBNull.Value)
+            {
+                return Convert.ToInt32(result);
+            }
+            return 0; 
+        }
+    }
+
 }
