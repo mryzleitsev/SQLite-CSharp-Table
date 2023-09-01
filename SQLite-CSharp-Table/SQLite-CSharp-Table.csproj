@@ -6,10 +6,16 @@
         <RootNamespace>SQLite_CSharp_Table</RootNamespace>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
+        <ApplicationIcon>Resource\Paomedia-Small-N-Flat-Database.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resource\Paomedia-Small-N-Flat-Database.ico" />
+      <Resource Include="Resource\Paomedia-Small-N-Flat-Database.ico" />
     </ItemGroup>
 
 </Project>
