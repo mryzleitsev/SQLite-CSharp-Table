@@ -27,13 +27,13 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10"
                     HorizontalAlignment="Center">
             <Label Content="First name: " />
-            <TextBox x:Name="FirstNameTextBox" Margin="10,0,0,0" Width="200" />
+            <TextBox x:Name="FirstNameTextBox" Margin="5,0,0,0" Width="200" />
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10"
                     HorizontalAlignment="Center">
             <Label Content="Last name: " />
-            <TextBox x:Name="LastNameTextBox" Margin="10,0,0,0" Width="200" />
+            <TextBox x:Name="LastNameTextBox" Margin="5,0,0,0" Width="200" />
         </StackPanel>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10"
@@ -44,8 +44,8 @@
 
         <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10"
                     HorizontalAlignment="Center">
-            <Label Content="Telefon: " />
-            <TextBox x:Name="TelefonTextBox" Margin="26,0,0,0" Width="200" />
+            <Label Content="Telephone: " />
+            <TextBox x:Name="TelephoneTextBox" Margin="5,0,0,0" Width="200" />
         </StackPanel>
 
         <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">

@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace SQLite_CSharp_Table;
 
-public partial class MainWindow : Window
+public partial class MainWindow
 {
     private readonly DatabaseManager _databaseManager;
 
@@ -14,16 +14,16 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         _databaseManager = new DatabaseManager();
-        _databaseManager?.CareateTable();
+        _databaseManager.CareateTable();
 
-        LoadDataFromDB();
+        LoadDataFromDataBase();
         DataGridTable.ItemsSource = Items;
     }
 
 
-    public ObservableCollection<User> Items { get; set; } = new();
+    private ObservableCollection<User> Items { get; set; } = new();
 
-    private void LoadDataFromDB()
+    private void LoadDataFromDataBase()
     {
         Items = _databaseManager.GetUsers();
     }
@@ -36,7 +36,7 @@ public partial class MainWindow : Window
             FirstNameTextBox.Text = selectedUser.FirstName;
             IdTextBox.Text = selectedUser.Id.ToString();
             LastNameTextBox.Text = selectedUser.LastName;
-            TelefonTextBox.Text = selectedUser.Telefon;
+            TelephoneTextBox.Text = selectedUser.Telephone;
             MailTextBox.Text = selectedUser.Email;
         }
         else
@@ -45,14 +45,14 @@ public partial class MainWindow : Window
             IdTextBox.Text = Convert.ToString(_databaseManager.GetMaxId() + 1);
             LastNameTextBox.Text = "";
             MailTextBox.Text = "";
-            TelefonTextBox.Text = "";
+            TelephoneTextBox.Text = "";
         }
     }
 
     private void InsertButton_Click(object sender, RoutedEventArgs e)
     {
         if (FirstNameTextBox.Text == string.Empty || LastNameTextBox.Text == string.Empty ||
-            MailTextBox.Text == string.Empty || TelefonTextBox.Text == string.Empty)
+            MailTextBox.Text == string.Empty || TelephoneTextBox.Text == string.Empty)
             MessageBox.Show("Some textbox is empty, please enter info in empty textbox");
         else
             try
@@ -60,22 +60,22 @@ public partial class MainWindow : Window
                 var firstName = FirstNameTextBox.Text;
                 var lastName = LastNameTextBox.Text;
                 var email = MailTextBox.Text;
-                var telefon = TelefonTextBox.Text;
+                var telephone = TelephoneTextBox.Text;
 
                 Items.Add(new User { FirstName = firstName });
                 Items.Add(new User { LastName = lastName });
                 Items.Add(new User { Email = email });
-                Items.Add(new User { Telefon = telefon });
+                Items.Add(new User { Telephone = telephone });
 
-                _databaseManager.IncrementUsername(firstName, lastName, email, telefon);
+                _databaseManager.IncrementUsername(firstName, lastName, email, telephone);
 
                 FirstNameTextBox.Text = "";
                 IdTextBox.Text = "";
                 LastNameTextBox.Text = "";
                 MailTextBox.Text = "";
-                TelefonTextBox.Text = "";
+                TelephoneTextBox.Text = "";
 
-                LoadDataFromDB();
+                LoadDataFromDataBase();
                 DataGridTable.ItemsSource = Items;
                 DataGridTable.Items.Refresh();
             }
@@ -96,11 +96,11 @@ public partial class MainWindow : Window
                 selectedUser.Id = int.Parse(IdTextBox.Text);
                 selectedUser.LastName = LastNameTextBox.Text;
                 selectedUser.Email = MailTextBox.Text;
-                selectedUser.Telefon = TelefonTextBox.Text;
+                selectedUser.Telephone = TelephoneTextBox.Text;
 
 
                 _databaseManager.UpdateUsername(Convert.ToString(selectedUser.Id), selectedUser.FirstName,
-                    selectedUser.LastName, selectedUser.Email, selectedUser.Telefon);
+                    selectedUser.LastName, selectedUser.Email, selectedUser.Telephone);
 
 
                 DataGridTable.ItemsSource = Items;
@@ -126,7 +126,7 @@ public partial class MainWindow : Window
                 IdTextBox.Text = "";
                 LastNameTextBox.Text = "";
                 MailTextBox.Text = "";
-                TelefonTextBox.Text = "";
+                TelephoneTextBox.Text = "";
 
                 DataGridTable.ItemsSource = Items;
                 DataGridTable.Items.Refresh();

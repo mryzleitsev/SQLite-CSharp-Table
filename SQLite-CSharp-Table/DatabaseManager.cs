@@ -21,7 +21,7 @@ public class DatabaseManager
             "FirstName TEXT NOT NULL, " +
             "LastName TEXT NOT NULL, " +
             "Email TEXT NOT NULL, " +
-            "Telefon TEXT NOT NULL)";
+            "Telephone TEXT NOT NULL)";
         using (var command = new SQLiteCommand(createTableQuery, _connection))
         {
             command.ExecuteNonQuery();
@@ -29,31 +29,31 @@ public class DatabaseManager
     }
 
 
-    public void IncrementUsername(string newFirstName, string newLastName, string newEmail, string newTelefon)
+    public void IncrementUsername(string newFirstName, string newLastName, string newEmail, string newTelephone)
     {
         var incrementQuery =
-            "INSERT INTO Users (FirstName, LastName, Email, Telefon) VALUES (@FirstName, @LastName, @Email, @Telefon)";
+            "INSERT INTO Users (FirstName, LastName, Email, Telephone) VALUES (@FirstName, @LastName, @Email, @Telephone)";
         using (var command = new SQLiteCommand(incrementQuery, _connection))
         {
             command.Parameters.AddWithValue("@FirstName", newFirstName);
             command.Parameters.AddWithValue("@LastName", newLastName);
             command.Parameters.AddWithValue("@Email", newEmail);
-            command.Parameters.AddWithValue("@Telefon", newTelefon);
+            command.Parameters.AddWithValue("@Telephone", newTelephone);
             command.ExecuteNonQuery();
         }
     }
 
-    public void UpdateUsername(string id, string newFirstName, string newLastName, string newEmail, string newTelefon)
+    public void UpdateUsername(string id, string newFirstName, string newLastName, string newEmail, string newTelephone)
     {
         var updateQuery =
-            "UPDATE Users SET FirstName = @FirstName, LastName = @LastName, Email = @Email, Telefon = @Telefon WHERE Id = @Id";
+            "UPDATE Users SET FirstName = @FirstName, LastName = @LastName, Email = @Email, Telephone = @Telephone WHERE Id = @Id";
         using (var command = new SQLiteCommand(updateQuery, _connection))
         {
             command.Parameters.AddWithValue("@Id", id);
             command.Parameters.AddWithValue("@FirstName", newFirstName);
             command.Parameters.AddWithValue("@LastName", newLastName);
             command.Parameters.AddWithValue("@Email", newEmail);
-            command.Parameters.AddWithValue("Telefon", newTelefon);
+            command.Parameters.AddWithValue("@Telephone", newTelephone);
             command.ExecuteNonQuery();
         }
     }
@@ -77,7 +77,7 @@ public class DatabaseManager
     {
         ObservableCollection<User> users = new();
 
-        var selectQuery = "SELECT Id, FirstName, LastName, Email, Telefon FROM Users";
+        var selectQuery = "SELECT Id, FirstName, LastName, Email, Telephone FROM Users";
         using (var command = new SQLiteCommand(selectQuery, _connection))
         {
             using (var reader = command.ExecuteReader())
@@ -88,10 +88,10 @@ public class DatabaseManager
                     var firstName = reader.GetString(1);
                     var lastName = reader.GetString(2);
                     var email = reader.GetString(3);
-                    var telefon = reader.GetString(4);
+                    var telephone = reader.GetString(4);
 
                     users.Add(new User
-                        { Id = id, FirstName = firstName, LastName = lastName, Email = email, Telefon = telefon });
+                        { Id = id, FirstName = firstName, LastName = lastName, Email = email, Telephone = telephone });
                 }
             }
         }
